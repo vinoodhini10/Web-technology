@@ -1,0 +1,9 @@
+.valid.false {
+background: green;
+}
+.valid.true {
+background: green;
+}
+.error {
+color: red;
+}

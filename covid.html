@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Covid Tracker</title>
+    <script src="angular.min.js"></script>
+    <script src="covid.js"></script>
+    <link rel="stylesheet" href="covid.css">
+</head>
+
+<body>
+    <div ng-app="myApp">
+        <div ng-controller="caseDetails">
+            <center>
+                <h1>COVID 19 CASE DETAILS</h1>
+            </center>
+            <center><input type="text" ng-model="place" placeholder="Enter state name"><br></center>
+            <table>
+                <tr>
+                    <th>LOCATION</t>
+                    <th>TOTAL CASES</th>
+                    <th>DEATHS</th>
+                </tr>
+                <tr ng-repeat="case in cases | filter:{location:place}">
+                    <td>{{case["location"]}}</td>
+                    <td>{{case["totalCases"]}}</td>
+                    <td>{{case["deaths"]}}</td>
+                </tr>
+            </table>
+        </div>
+        <div ng-controller="vaccineDetails">
+            <center>
+                <h1>VACCINATED COUNT DETAILS</h1>
+            </center>
+            <center><input type="text" ng-model="place" placeholder="Enter country name"><br></center>
+            <table>
+                <tr>
+                    <th>COUNTRY</th>
+                    <th>PEOPLE FULLY VACCINATED</th>
+                    <th>PEOPLE PARTLY VACCINATED</th>
+                </tr>
+                <tr ng-repeat="people in peoples | filter:{country:place}">
+                    <td>{{people["country"]}}</td>
+                    <td>{{people["fullVaccine"]}}</td>
+                    <td>{{people["partVaccine"]}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

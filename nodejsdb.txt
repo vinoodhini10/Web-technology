@@ -1,0 +1,43 @@
+Create a DB to store book details, retrieve records with 2 different query
+using Mysql with Node JS:
+Program codes:
+var mySql = require("mysql");
+var con = mysql.createConnection({
+ host: "localhost",
+ user: "root",
+ password: "vinoodhini"
+});
+con.connect(function(err) {
+ if (err) throw err;
+ console.log("Connected!");
+ con.query("CREATE DATABASE my_db", function(err, result) {
+ if (err) throw err;
+ console.log("Database created");
+ });
+});
+con.connect(function(err) {
+ if (err) throw err;
+ console.log("Connected!");
+ var sql = "CREATE TABLE book (name VARCHAR(255), author VARCHAR(255), price VAR
+CHAR(255))";
+ con.query(sql, function(err, result) {
+ if (err) throw err;
+ console.log("Table created");
+ });
+NAME: VINOODHINI | REG NO: 19IT118
+2
+});
+con.connect(function(err) {
+ if (err) throw err;
+ console.log("Connected!");
+ var sql = "INSERT INTO book (name, author, price) VALUES ('Harry Potter', 'J K Rowling',
+'1000rs')";
+ con.query(sql, function(err, result) {
+ if (err) throw err;
+ console.log("1 record inserted");
+ });
+ con.query("SELECT * FROM book", function(err, result, fields) {
+ if (err) throw err;
+ console.log(result);
+ });
+});

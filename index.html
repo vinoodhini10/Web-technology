@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<body style="background-color:pink;">
+<h2 align="center" >19IT014 Web Tech Qn 2</h2>
+<div align="center" >
+<button onclick="Dialog()">Click here</button>
+<button onclick="myFunction()">Click here</button>
+</div>
+<p id="demo" align="center"></p>
+<script>
+function Dialog() {
+  var txt;
+  if (confirm("Press a button!")) {
+    txt = "OK is pressed in the dialog box!";
+  } else {
+    txt = "Cancel is pressed in the dialog box!";
+  }
+  document.getElementById("demo").innerHTML = txt;
+}
+function myFunction() {
+  var person = prompt("Please enter your name", "");
+  if (person != null) {
+    document.getElementById("demo").innerHTML =
+    "Hello " + person + "! How are you today?";
+  }
+}
+</script>
+</body>
+</html>
+
+

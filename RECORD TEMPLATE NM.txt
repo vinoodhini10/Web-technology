@@ -1,0 +1,422 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//MYSQL DATABASE:
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+  host: "localhost",
+  user: "myusername",
+  password: "mypassword"
+});
+
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+  /*Create a database named "mydb":*/
+  con.query("CREATE DATABASE mydb", function (err, result) {
+    if (err) throw err;
+    console.log("Database created");
+  });
+});
+
+###################################################################
+//MYSQL TABLE:
+var con = mysql.createConnection({
+  host: "localhost",
+  user: "yourusername",
+  password: "yourpassword",
+  database: "mydb"
+});
+
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+  var sql = "CREATE TABLE customers (name VARCHAR(255), address VARCHAR(255))";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("Table created");
+  });
+});
+
+//ALTER:
+var sql = "ALTER TABLE customers ADD COLUMN id INT AUTO_INCREMENT PRIMARY KEY";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("Table altered");
+
+########################################################################
+//INSERT INTO: 
+var sql = "INSERT INTO customers (name, address) VALUES ('Company Inc', 'Highway 37')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("1 record inserted");
+
+//MULTIPLE:
+
+var sql = "INSERT INTO customers (name, address) VALUES ?";
+  var values = [
+    ['John', 'Highway 71'],
+    ['Peter', 'Lowstreet 4'],
+    ['Amy', 'Apple st 652'],
+  ];
+  con.query(sql, [values], function (err, result) {
+    if (err) throw err;
+    console.log("Number of records inserted: " + result.affectedRows);
+  });
+
+//RETURN RESULT ID:
+ var sql = "INSERT INTO customers (name, address) VALUES ('Michelle', 'Blue Village 1')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("1 record inserted, ID: " + result.insertId);
+
+##########################################################################
+
+//SELECT TABLE:
+ con.query("SELECT * FROM customers", function (err, result, fields) {
+    if (err) throw err;
+    console.log(result);
+
+//SELECT COLUMN:
+ con.query("SELECT name, address FROM customers", function (err, result, fields) {
+    if (err) throw err;
+    console.log(result);
+
+//FIELDS:
+ con.query("SELECT name, address FROM customers", function (err, result, fields) {
+    if (err) throw err;
+    console.log(fields);
+
+
+//WITH FILTER:
+ con.query("SELECT * FROM customers WHERE address = 'Park Lane 38'", function (err, result) {
+    if (err) throw err;
+    console.log(result);
+
+//WILD CARD:
+con.query("SELECT * FROM customers WHERE address LIKE 'S%'", function (err, result) {
+    if (err) throw err;
+    console.log(result);
+
+//MYSQL ESCAPE:
+  var adr = 'Mountain 21';
+  //Escape the address value:
+  var sql = 'SELECT * FROM customers WHERE address = ' + mysql.escape(adr);
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(result);
+
+//PLACEHOLDER:
+var adr = 'Mountain 21';
+var sql = 'SELECT * FROM customers WHERE name = ? OR address = ?';
+con.query(sql, [name, adr], function (err, result) {
+  if (err) throw err;
+  console.log(result);
+
+//OREDER BY:
+ con.query("SELECT * FROM customers ORDER BY name", function (err, result) {
+    if (err) throw err;
+    console.log(result);
+
+//DELETE:
+ var sql = "DELETE FROM customers WHERE address = 'Mountain 21'";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("Number of records deleted: " + result.affectedRows);
+
+//DROP:
+con.connect(function(err) {
+  if (err) throw err;
+  var sql = "DROP TABLE customers";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("Table deleted");
+
+//UPDATE:
+con.connect(function(err) {
+  if (err) throw err;
+  var sql = "UPDATE customers SET address = 'Canyon 123' WHERE address = 'Valley 345'";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(result.affectedRows + " record(s) updated");
+
+
+//LIMIT:
+con.connect(function(err) {
+  if (err) throw err;
+  var sql = "SELECT * FROM customers LIMIT 2, 5";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(result);
+
+
+//JOIN:
+con.connect(function(err) {
+  if (err) throw err;
+  var sql = "SELECT users.name AS user, products.name AS favorite FROM users JOIN products ON users.favorite_product = products.id";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(result);
+
+
+---LEFT JOIN products ON users.favorite_product = products.id----
+---RIGHT JOIN products ON users.favorite_product = products.id----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+##########################################################################################################################
+//DATE AND TIME:
+var http = require('http');
+var dt = require('./myfirstmodule');
+
+http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/html'});
+  res.write("The date and time is currently: " + dt.myDateTime());
+  res.end();
+}).listen(8080);
+
+###################################################################
+ //RETURN URL:
+  res.writeHead(200, {'Content-Type': 'text/html'});
+  res.write(req.url);
+  res.end();
+
+//QUERY STRING:
+http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/html'});
+  /*Use the url module to turn the querystring into an object:*/
+  var q = url.parse(req.url, true).query;
+  /*Return the year and month from the query object:*/
+  var txt = q.year + " " + q.month;
+  res.end(txt);
+}).listen(8080);
+
+###################################################################
+//READ A FILE:
+var http = require('http');
+var fs = require('fs');
+http.createServer(function (req, res) {
+  //Open a file on the server and return its content:
+  fs.readFile('demofile1.html', function(err, data) {
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write(data);
+    return res.end();
+  });
+}).listen(8080);
+
+//CREATE A FILE:
+//APPEND:
+var fs = require('fs');
+//create a file named mynewfile1.txt:
+fs.appendFile('mynewfile1.txt', 'Hello content!', function (err) {
+  if (err) throw err;
+  console.log('Saved!');
+});
+
+//OPEN():
+var fs = require('fs');
+fs.open('mynewfile2.txt', 'w', function (err, file) {
+  if (err) throw err;
+  console.log('Saved!');
+});
+
+//WRITE:
+var fs = require('fs');
+fs.writeFile('mynewfile3.txt', 'Hello content!', function (err) {
+  if (err) throw err;
+  console.log('Saved!');
+});
+
+//DELETE:
+var fs = require('fs');
+fs.unlink('mynewfile2.txt', function (err) {
+  if (err) throw err;
+  console.log('File deleted!');
+});
+
+//RENAME:
+fs.rename('mynewfile1.txt', 'myrenamedfile.txt', function (err) {
+  if (err) throw err;
+  console.log('File Renamed!');
+
+###################################################################
+//FILESERVER:
+var http = require('http');
+var url = require('url');
+var fs = require('fs');
+
+http.createServer(function (req, res) {
+  var q = url.parse(req.url, true);
+  var filename = "." + q.pathname;
+  fs.readFile(filename, function(err, data) {
+    if (err) {
+      res.writeHead(404, {'Content-Type': 'text/html'});
+      return res.end("404 Not Found");
+    } 
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write(data);
+    return res.end();
+  });
+}).listen(8080);
+
+###################################################################
+//UPPERCASE:
+var http = require('http');
+var uc = require('upper-case');
+http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/html'});
+  /*Use our upper-case module to upper case a string:*/
+  res.write(uc.upperCase("Hello World!"));
+  res.end();
+}).listen(8080);
+C:\Users\Your Name>node demo_uppercase.js
+
+###################################################################
+//EVENTS:
+var events = require('events');
+var eventEmitter = new events.EventEmitter();
+var myEventHandler = function () {
+  console.log('I hear a scream!');
+}
+eventEmitter.on('scream', myEventHandler);
+eventEmitter.emit('scream');
+
+###################################################################
+//UPLOAD FILES:
+C:\Users\Your Name>npm install formidable
+var http = require('http');
+var formidable = require('formidable');
+var fs = require('fs');
+
+http.createServer(function (req, res) {
+  if (req.url == '/fileupload') {
+    var form = new formidable.IncomingForm();
+    form.parse(req, function (err, fields, files) {
+      var oldpath = files.filetoupload.filepath;
+      var newpath = 'C:/Users/Your Name/' + files.filetoupload.originalFilename;
+      fs.rename(oldpath, newpath, function (err) {
+        if (err) throw err;
+        res.write('File uploaded and moved!');
+        res.end();
+      });
+ });
+  } else {
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write('<form action="fileupload" method="post" enctype="multipart/form-data">');
+    res.write('<input type="file" name="filetoupload"><br>');
+    res.write('<input type="submit">');
+    res.write('</form>');
+    return res.end();
+  }
+}).listen(8080);
+
+###################################################################
+//EMAIL:
+C:\Users\Your Name>npm install nodemailer
+var nodemailer = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'youremail@gmail.com',
+    pass: 'yourpassword'
+  }
+});
+
+var mailOptions = {
+  from: 'youremail@gmail.com',
+  to: 'myfriend@yahoo.com',
+  subject: 'Sending Email using Node.js',
+  text: 'That was easy!'
+};
+
+transporter.sendMail(mailOptions, function(error, info){
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('Email sent: ' + info.response);
+  }
+});
+
+
+###################################################################
+//ADDITION OF 2 NOS:
+//Addition of two numbers
+exports.add = function (x, y) {
+    return x + y; 
+ };
+//Subtraction of two numbers 
+ exports.sub = function (x, y) {
+    return x - y; 
+ };
+ 
+var arithmetic = require('./fun');
+
+var x = 12 , y = 10
+var num = Math.pow(x,2);
+console.log("Addition of " + x + " and " + y + " is " + arithmetic.add(x, y));
+
+console.log("Subtraction of " + x + " and " + y + " is " + arithmetic.sub(x, y));
+console.log("Square of "+ x +" "+"is"+ "  "+num); 
+
+
+
+
+

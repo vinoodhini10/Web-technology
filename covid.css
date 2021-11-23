@@ -1,0 +1,46 @@
+body {
+    background-color: coral;
+    padding: 0 30px 20px 30px;
+}
+
+table {
+    width: 100%;
+    font-family: 'Open Sans', sans-serif;
+    border-collapse: collapse;
+    margin-top: 1
+   
+    0px;
+}
+td,
+th {
+    border: 5px solid #858e99;
+    text-align: center;
+    padding: 10px 0 10px 0;
+    color: white;
+    font-size: 17px;
+}
+
+th {
+    background-color:#747474 ;
+    color: white;
+    text-transform: uppercase;
+}
+
+h1 {
+    color: black;
+}
+
+label {
+    color: white;
+    font-size: 20px;
+}
+
+input {
+    background-color: black;
+    font: bolder;
+    color: white;
+    border: 2px solid white;
+    border-radius: 8px;
+    height: 20px;
+    width: 200px;
+}

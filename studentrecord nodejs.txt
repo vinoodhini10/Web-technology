@@ -1,0 +1,55 @@
+ Donifa Babu B M_19IT026
+ Class Room - Problem 8
+Create a custom module namely "Student". Define a class with the following
+functions
+o Get student details
+o Find the grade and display it for each course
+o Create 2-3 student objects by importing this module
+student.js
+const student = require('./details.js');
+const prompt = require('prompt-sync')();
+const readline = require("readline-sync");
+const no = prompt('enter the number of students ');
+for (let i = 0; i < no; i++) {
+const ob1 = new student();
+const name = prompt('Enter your name ');
+const regno = prompt('Enter your regno ');
+const sub = prompt('Enter the department name ');
+console.log("enter marks of each subject ");
+let number = [];
+for (let i = 0; i < 5; ++i) {
+number.push(Number(readline.question()));
+}
+const total = ob1.printdetails(name,regno,sub,number);
+console.log("total marks "+total);
+const grade = ob1.printgrade(total);
+ Donifa Babu B M_19IT026
+console.log("grade " +grade);
+console.log('\n');
+}
+details.js
+class student{
+printdetails(name,regno,sub,number) {
+let sum=0;
+console.log("name "+name);
+console.log("regno "+regno);
+console.log("department name "+sub);
+for (let i = 0; i < number.length; i++) {
+sum += number[i];
+}
+return sum;
+}
+printgrade(total){
+if(total>400){
+return 'S';
+}
+else if(total>300){
+return 'A';
+}
+else if(total>200){
+return 'B';
+}
+else {
+return 'C';
+}}}
+module.exports=student;

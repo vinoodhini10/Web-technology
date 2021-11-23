@@ -1,0 +1,55 @@
+Web technology
+Problem-8
+ • Create a custom module namely "Student". Define a class with the following functions 
+o Get student details 
+o Find the grade and display it for each course 
+o Create 2-3 student objects by importing this module
+Student1.js
+class Student1{
+ student_details=[];
+ mark_details=[];
+ add_details(s_name,reg_no,course,cou_mark){
+ var item={Name:s_name,Reg_no:reg_no};
+ this.student_details.push(item);
+ for(var i=0;i<course.length;i++){
+ var val={Course_name:course[i],Mark:cou_mark[i],Grade:this.cal_grade(cou_mark[i])};
+ this.mark_details.push(val);
+ }
+ }
+ cal_grade(Mark){
+ if(Mark>=90){
+ return "S";
+ }
+ else if(Mark>=80){
+ return "A";
+ }
+ else if(Mark>=70){
+ return "B";
+ }
+ else if(Mark>=60){
+ return "B";
+ }
+ else if(Mark>=50){
+ return "B";
+ }
+ else{
+ return "U";
+ }
+ }
+ display(){
+    console.log(this.student_details);
+    console.log(this.mark_details);
+    }
+   }
+   module.exports=Student1;
+Problem8.js
+const student=require('./Student1');
+const stud1=new student();
+const stud2=new student();
+stud1.add_details("VINOODHINI D","19IT118",['Data structure','Java','Oops'],[100,95,98]
+);
+stud2.add_details("LEO M","19IT019",['Data structure','Java','Oops'],[80,99,99]);
+stud1.display();
+stud2.display();
+Output:
+ 
